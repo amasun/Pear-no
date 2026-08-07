@@ -41,6 +41,16 @@ A React + Vite recreation of the [pear.no](https://pear.no/) experience, focused
 | Footer Shader | `READY` | Displays only after its textures are ready |
 | Application | `READY` | Form scene, hover depth, and application modal |
 
+## Toolchain
+
+| Stage | Tools | Purpose |
+| --- | --- | --- |
+| Original project implementation | ChatGPT · Seedance · Claude | Image prompting and asset generation, slow-motion footage, and production code |
+| Replication and reconstruction | ChatGPT · Gemini | Runtime analysis, visual comparison, code recreation, and debugging |
+
+The original creation pipeline is based on the creator's publicly described workflow. The replication tools serve a different purpose: understanding source behavior and rebuilding the experience locally.
+
+
 ## Tech Stack
 
 | Layer | Technologies |
@@ -157,6 +167,15 @@ flowchart LR
 This project is intended for local research and technical learning. Visual assets, branding, and source-site content remain the property of their respective owners; do not use them for commercial publication without permission.
 
 The technical analysis, animation breakdowns, resource-loading investigations, and implementation lessons are documented in [REPLICATION_LESSONS.md](REPLICATION_LESSONS.md).
+
+### REPLICATION_LESSONS Summary
+
+- Treat the site as a scroll-driven narrative system, not as a collection of static sections.
+- Define one logical Road timeline and map physical scroll positions into scene start, hold, and exit windows.
+- Treat videos and frame sequences as timed visual assets with explicit cover rules, anchors, mobile variants, and crossfades.
+- Drive grid lines, typography, ink effects, masks, and hover depth from scene state instead of fixed decoration or layout changes.
+- Use real alpha compositing for the ink effect and compositing-layer transforms for stable form hover motion.
+- Validate scene boundaries, loading fallbacks, computed styles, and production builds on both desktop and mobile.
 
 For the Chinese version, see [README.md](README.md).
 
