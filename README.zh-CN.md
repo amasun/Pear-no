@@ -1,10 +1,43 @@
 # Pear No Clone
 
+<p align="center">
+  <img src="https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react&logoColor=white" alt="React 19" />
+  <img src="https://img.shields.io/badge/Vite-6-646CFF?style=flat-square&logo=vite&logoColor=white" alt="Vite 6" />
+  <img src="https://img.shields.io/badge/WebGL-GLSL-990000?style=flat-square&logo=webgl&logoColor=white" alt="WebGL GLSL" />
+  <img src="https://img.shields.io/badge/License-Research%20Only-555555?style=flat-square" alt="Research only" />
+</p>
+
+<p align="center">
+  <strong>Scroll-driven creative web experience recreation</strong><br />
+  WebGL shaders · Canvas sequences · Responsive storytelling · Resource-safe transitions
+</p>
+
 ![Pear No Clone banner](docs/assets/readme-banner.png)
 
 这是一个基于 React + Vite 的 pear.no 网站体验复刻项目，重点还原滚动叙事、WebGL 背景、序列帧动画、遮罩合成和响应式布局。
 
 ![Blue hero scene](docs/assets/readme-scene-blue.png)
+
+## 目录
+
+- [项目概览](#项目概览)
+- [技术栈](#技术栈)
+- [快速开始](#快速开始)
+- [交互与加载](#交互与加载)
+- [系统架构](#系统架构)
+- [资源结构](#资源结构)
+- [复刻说明](#复刻说明)
+
+## 项目概览
+
+| 模块 | 状态 | 说明 |
+| --- | :---: | --- |
+| 首屏 WebGL | `READY` | GLSL hero shader 与共享 hero video 时钟 |
+| Scroll Road | `READY` | 桌面端、移动端统一逻辑时间线 |
+| Mask Calibration | `READY` | 双击打开，支持位置、缩放和灵敏度调节 |
+| Fly / Transition | `READY` | 序列帧预热与最近可用帧兜底 |
+| Footer Shader | `READY` | 纹理就绪后再显示，避免黑屏 |
+| Application | `READY` | 表单场景、hover 深度和申请弹窗 |
 
 ## 项目内容
 
@@ -20,12 +53,23 @@
 
 ## 技术栈
 
-- React 19
-- Vite 6
-- WebGL / GLSL
-- HTML Canvas 2D
-- SVG
-- pnpm
+| 层级 | 技术 |
+| --- | --- |
+| 应用层 | React 19 · Vite 6 · pnpm |
+| 图形层 | WebGL · GLSL · HTML Canvas 2D |
+| 动画层 | Scroll timeline · requestAnimationFrame · CSS motion |
+| 视觉层 | SVG overlays · Chroma-key masking · Responsive layout |
+
+```text
+Browser
+  ├─ React App
+  │   ├─ Scroll Road / Navigation / Narrative
+  │   ├─ HeroCanvas ─────── GLSL + shared hero video
+  │   ├─ SequenceCanvas ─── 2D frames + mask compositing
+  │   ├─ ApplicationScene ─ form scene + orbit geometry
+  │   └─ FooterTransition ─ WebGL texture transition
+  └─ public/films ───────── local video, poster and frame assets
+```
 
 ## 快速开始
 
@@ -45,7 +89,7 @@ pnpm build
 pnpm preview
 ```
 
-## 页面交互
+## 交互与加载
 
 ### 首屏 loading
 
@@ -76,6 +120,28 @@ fly、transition 和 footer 阶段采用非阻塞加载。资源尚未完成时�
 
 Application 区域包含三个虚线椭圆、发光粒子、表单字段和发送按钮。椭圆保持与原站一致的静态姿态，避免出现异常快速旋转。
 
+## 系统架构
+
+```mermaid
+flowchart LR
+  A[Scroll Position] --> B[Road Timeline]
+  B --> C[React Scene State]
+  C --> D[Hero WebGL]
+  C --> E[Canvas Sequences]
+  C --> F[Application Scene]
+  C --> G[Footer Transition]
+  H[Media Readiness] --> I[Loading State]
+  I --> D
+  I --> E
+  I --> G
+```
+
+## 截图画廊
+
+| Hero | Model | Terms |
+| --- | --- | --- |
+| ![Hero scene](docs/assets/readme-scene-blue.png) | ![Model scene](docs/assets/readme-scene-model.png) | ![Terms scene](docs/assets/readme-scene-terms.png) |
+
 ## 资源结构
 
 - `src/App.jsx`：页面组合、滚动状态和全局交互
@@ -83,6 +149,15 @@ Application 区域包含三个虚线椭圆、发光粒子、表单字段和发�
 - `src/glsl/`：hero 与 footer transition shader
 - `public/films/`：视频、海报和序列帧资源
 - `docs/assets/`：README 展示图片
+
+## 常用命令
+
+| 命令 | 用途 |
+| --- | --- |
+| `pnpm dev` | 启动开发服务 |
+| `pnpm build` | 生成生产构建 |
+| `pnpm preview` | 预览生产构建 |
+| 双击页面 | 打开 / 关闭 mask 校准面板 |
 
 ## 复刻说明
 
@@ -94,4 +169,3 @@ Recreated by Artgineer
 
 - [GitHub](https://github.com/amasun?tab=repositories)
 - [Xiaohongshu](https://www.xiaohongshu.com/user/profile/5c094b50f7e8b948da476607)
-
