@@ -24,7 +24,7 @@
 
 ## 项目预览
 
-<video src="docs/assets/preview.mp4" controls muted loop playsinline width="100%"></video>
+<video src="https://github.com/user-attachments/assets/21d93997-d0d2-472b-a3f0-2891058f6577" controls muted loop playsinline width="100%"></video>
 
 [下载预览视频](docs/assets/preview.mp4)
 
