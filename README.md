@@ -5,6 +5,8 @@
 A React + Vite recreation of the [pear.no](https://pear.no/) experience.
 This project focuses on the site’s scroll-driven storytelling, combining WebGL shaders, 2D canvas masking, SVG overlays, and responsive layout logic into a single timeline.
 
+![Blue hero scene](docs/assets/readme-scene-blue.png)
+
 ## What’s included
 
 - **WebGL hero stage** driven by custom GLSL shaders
@@ -15,6 +17,8 @@ This project focuses on the site’s scroll-driven storytelling, combining WebGL
 - **Application scene and modal** for the apply flow
 - **FAQ carousel** and footer transition animations
 - **Mask calibration widget** for tuning hero positioning and sky-mask sensitivity
+
+![Model sequence](docs/assets/readme-scene-model.png)
 
 ## Tech stack
 
@@ -64,6 +68,8 @@ pnpm preview  # preview the production build locally
 - Loading is state-driven: the poster or hero video releases the initial loading state, so a fixed delay cannot expose a blank canvas.
 - If both opening assets fail for 10 seconds, the loading state reports the failure and exposes a `Retry` action.
 - Fly sequence, transition frames, and footer shader media load non-blockingly. During a fast jump, the site keeps the last available frame visible and reports the active phase (`FLY SEQUENCE`, `TRANSITION`, or `FOOTER TRANSITION`) while assets finish loading.
+
+![Terms sequence](docs/assets/readme-scene-terms.png)
 
 ## Design and replication notes
 
