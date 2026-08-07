@@ -103,7 +103,8 @@ Fly, transition, and footer stages load non-blockingly. During a fast jump, the 
 
 ### Mask Calibration Panel
 
-The calibration panel is hidden by default. Double-click an empty area of the page to open or close it.
+> [!IMPORTANT]
+> **The calibration panel is hidden by default. Double-click an empty area of the page to open or close it.**
 
 The panel provides:
 
