@@ -62,6 +62,26 @@ The original creation pipeline is based on the creator's publicly described work
 | Motion | Scroll timeline · requestAnimationFrame · CSS motion |
 | Visual system | SVG overlays · Chroma-key masking · Responsive layout |
 
+## Animation Asset Inventory
+
+| Animation segment | Asset type | Count | Asset link |
+| --- | --- | ---: | --- |
+| Hero / Signal | MP4 + poster | 1 MP4 | [`signal.mp4`](public/films/signal.mp4) · [`poster`](public/films/signal-poster.jpg) |
+| Hero / Colossus | MP4 + poster | 1 MP4 | [`colossus.mp4`](public/films/colossus.mp4) · [`poster`](public/films/colossus-poster.jpg) |
+| Hero / Reveal | MP4 + poster | 1 MP4 | [`reveal.mp4`](public/films/reveal.mp4) · [`poster`](public/films/reveal-poster.jpg) |
+| Model / Bridge v28 | WebP sequence | 121 / tier | [`v28`](public/films/model/v28/) |
+| Model / Bridge v51 | WebP sequence | 121 / tier | [`v51`](public/films/model/v51/) |
+| Model / Bridge v61 | WebP sequence | 121 / tier | [`v61`](public/films/model/v61/) |
+| Model / Renaissance | WebP sequence | 362 / tier | [`renaissance`](public/films/model/renaissance/) |
+| Coda | WebP sequence | 89 / tier | [`coda`](public/films/coda/) |
+| Plan | WebP sequence | 121 / tier | [`plan`](public/films/plan/) |
+| Tree | WebP sequence | 121 / tier | [`tree`](public/films/tree/) |
+| Flysky | WebP sequence | 121 / tier | [`flysky`](public/films/flysky/) |
+| Transition | WebP sequence | 121 / tier | [`trans`](public/films/trans/) |
+| Footer loop | MP4 | 1 MP4 | [`footer-loop.mp4`](public/films/footer-loop.mp4) |
+
+> `/ tier` means desktop and mobile each have a dedicated asset set. Each Model bridge and Renaissance sequence contains 121 and 362 frames respectively, giving 483 logical frames for one Model sequence.
+
 ```text
 Browser
   ├─ React App

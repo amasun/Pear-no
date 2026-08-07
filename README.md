@@ -74,6 +74,26 @@
 | 动画层 | Scroll timeline · requestAnimationFrame · CSS motion |
 | 视觉层 | SVG overlays · Chroma-key masking · Responsive layout |
 
+## 动画资产清单
+
+| 动画片段 | 资源类型 | 数量 | 资源链接 |
+| --- | --- | ---: | --- |
+| Hero / Signal | MP4 + poster | 1 MP4 | [`signal.mp4`](public/films/signal.mp4) · [`poster`](public/films/signal-poster.jpg) |
+| Hero / Colossus | MP4 + poster | 1 MP4 | [`colossus.mp4`](public/films/colossus.mp4) · [`poster`](public/films/colossus-poster.jpg) |
+| Hero / Reveal | MP4 + poster | 1 MP4 | [`reveal.mp4`](public/films/reveal.mp4) · [`poster`](public/films/reveal-poster.jpg) |
+| Model / Bridge v28 | WebP sequence | 121 / tier | [`v28`](public/films/model/v28/) |
+| Model / Bridge v51 | WebP sequence | 121 / tier | [`v51`](public/films/model/v51/) |
+| Model / Bridge v61 | WebP sequence | 121 / tier | [`v61`](public/films/model/v61/) |
+| Model / Renaissance | WebP sequence | 362 / tier | [`renaissance`](public/films/model/renaissance/) |
+| Coda | WebP sequence | 89 / tier | [`coda`](public/films/coda/) |
+| Plan | WebP sequence | 121 / tier | [`plan`](public/films/plan/) |
+| Tree | WebP sequence | 121 / tier | [`tree`](public/films/tree/) |
+| Flysky | WebP sequence | 121 / tier | [`flysky`](public/films/flysky/) |
+| Transition | WebP sequence | 121 / tier | [`trans`](public/films/trans/) |
+| Footer loop | MP4 | 1 MP4 | [`footer-loop.mp4`](public/films/footer-loop.mp4) |
+
+> ` / tier` 表示桌面端与移动端各有一套资源。Model 每个 bridge 片段与 Renaissance 分别为 121 和 362 帧，因此单条逻辑 Model 序列为 483 帧。
+
 ```text
 Browser
   ├─ React App
