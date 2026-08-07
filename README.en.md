@@ -22,6 +22,12 @@ Original site: [https://pear.no/](https://pear.no/)
 
 ![Blue hero scene](docs/assets/readme-scene-blue.png)
 
+## Preview
+
+<video src="docs/assets/preview.mp4" controls muted loop playsinline width="100%"></video>
+
+[Download preview video](docs/assets/preview.mp4)
+
 ## Table of Contents
 
 - [Overview](#overview)

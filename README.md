@@ -22,6 +22,12 @@
 
 ![Blue hero scene](docs/assets/readme-scene-blue.png)
 
+## 项目预览
+
+<video src="docs/assets/preview.mp4" controls muted loop playsinline width="100%"></video>
+
+[下载预览视频](docs/assets/preview.mp4)
+
 ## 目录
 
 - [项目概览](#项目概览)
