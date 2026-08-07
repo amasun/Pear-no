@@ -1,4 +1,4 @@
-# Pear No Clone
+# Pear.No Clone
 
 [中文文档](https://github.com/amasun/Pear-no/blob/main/README.md) · [English](https://github.com/amasun/Pear-no/blob/main/README.en.md) · [REPLICATION_LESSONS](https://github.com/amasun/Pear-no/blob/main/REPLICATION_LESSONS.md)
 
@@ -17,6 +17,8 @@
 ![Pear No Clone banner](docs/assets/readme-banner.png)
 
 A React + Vite recreation of the [pear.no](https://pear.no/) experience, focused on scroll-driven storytelling, WebGL backgrounds, frame sequences, mask compositing, and responsive layout.
+
+Original site: [https://pear.no/](https://pear.no/)
 
 ![Blue hero scene](docs/assets/readme-scene-blue.png)
 

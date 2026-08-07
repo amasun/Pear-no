@@ -1,4 +1,4 @@
-# Pear No Clone
+# Pear.No Clone
 
 [中文文档](https://github.com/amasun/Pear-no/blob/main/README.md) · [English](https://github.com/amasun/Pear-no/blob/main/README.en.md) · [REPLICATION_LESSONS](https://github.com/amasun/Pear-no/blob/main/REPLICATION_LESSONS.md)
 
@@ -17,6 +17,8 @@
 ![Pear No Clone banner](docs/assets/readme-banner.png)
 
 这是一个基于 React + Vite 的 pear.no 网站体验复刻项目，重点还原滚动叙事、WebGL 背景、序列帧动画、遮罩合成和响应式布局。
+
+原始站点：[https://pear.no/](https://pear.no/)
 
 ![Blue hero scene](docs/assets/readme-scene-blue.png)
 
