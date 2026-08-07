@@ -1,5 +1,7 @@
 # Pear No Clone
 
+![Pear No Clone banner](docs/assets/readme-banner.png)
+
 A React + Vite recreation of the [pear.no](https://pear.no/) experience.
 This project focuses on the site’s scroll-driven storytelling, combining WebGL shaders, 2D canvas masking, SVG overlays, and responsive layout logic into a single timeline.
 
