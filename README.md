@@ -1,6 +1,6 @@
 # Pear No Clone
 
-[中文文档](README.zh-CN.md) · [English](README.md)
+[中文文档](README.md) · [English](README.en.md)
 
 <p align="center">
   <img src="https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react&logoColor=white" alt="React 19" />

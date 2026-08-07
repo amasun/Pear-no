@@ -1,6 +1,6 @@
 # Pear No Clone
 
-[中文文档](README.zh-CN.md) · English
+[中文文档](README.md) · English
 
 <p align="center">
   <img src="https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react&logoColor=white" alt="React 19" />
@@ -158,7 +158,7 @@ This project is intended for local research and technical learning. Visual asset
 
 The technical analysis, animation breakdowns, resource-loading investigations, and implementation lessons are documented in [REPLICATION_LESSONS.md](REPLICATION_LESSONS.md).
 
-For the Chinese version, see [README.zh-CN.md](README.zh-CN.md).
+For the Chinese version, see [README.md](README.md).
 
 ## Credits
 
@@ -166,4 +166,3 @@ Recreated by Artgineer
 
 - [GitHub](https://github.com/amasun?tab=repositories)
 - [Xiaohongshu](https://www.xiaohongshu.com/user/profile/5c094b50f7e8b948da476607)
-
