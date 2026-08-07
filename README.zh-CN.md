@@ -163,6 +163,8 @@ flowchart LR
 
 本项目用于本地研究和技术学习。项目中的视觉素材、品牌和原站内容仍归其原作者所有，请勿未经授权用于商业发布。
 
+复刻过程中的技术分析、动画拆解、资源加载排查和实现经验，详见 [REPLICATION_LESSONS.md](REPLICATION_LESSONS.md)。
+
 ## Credits
 
 Recreated by Artgineer
