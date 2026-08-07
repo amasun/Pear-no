@@ -2,45 +2,66 @@
 
 [中文文档](README.zh-CN.md) · English
 
+<p align="center">
+  <img src="https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react&logoColor=white" alt="React 19" />
+  <img src="https://img.shields.io/badge/Vite-6-646CFF?style=flat-square&logo=vite&logoColor=white" alt="Vite 6" />
+  <img src="https://img.shields.io/badge/WebGL-GLSL-990000?style=flat-square&logo=webgl&logoColor=white" alt="WebGL GLSL" />
+  <img src="https://img.shields.io/badge/License-Research%20Only-555555?style=flat-square" alt="Research only" />
+</p>
+
+<p align="center">
+  <strong>Scroll-driven creative web experience recreation</strong><br />
+  WebGL shaders · Canvas sequences · Responsive storytelling · Resource-safe transitions
+</p>
+
 ![Pear No Clone banner](docs/assets/readme-banner.png)
 
-A React + Vite recreation of the [pear.no](https://pear.no/) experience.
-This project focuses on the site’s scroll-driven storytelling, combining WebGL shaders, 2D canvas masking, SVG overlays, and responsive layout logic into a single timeline.
+A React + Vite recreation of the [pear.no](https://pear.no/) experience, focused on scroll-driven storytelling, WebGL backgrounds, frame sequences, mask compositing, and responsive layout.
 
 ![Blue hero scene](docs/assets/readme-scene-blue.png)
 
-## What’s included
+## Table of Contents
 
-- **WebGL hero stage** driven by custom GLSL shaders
-- **Canvas-based sequence overlays** for grid lines, transition effects, and chroma-key masking
-- **Scroll timeline mapping** that keeps desktop and mobile chapter timing aligned
-- **Navigation and chapter rail** with active-state tracking
-- **Terms / narrative sections** that unfold alongside the main stage
-- **Application scene and modal** for the apply flow
-- **FAQ carousel** and footer transition animations
-- **Mask calibration widget** for tuning hero positioning and sky-mask sensitivity
+- [Overview](#overview)
+- [Tech Stack](#tech-stack)
+- [Getting Started](#getting-started)
+- [Interaction and Loading](#interaction-and-loading)
+- [System Architecture](#system-architecture)
+- [Project Structure](#project-structure)
+- [Replication Notes](#replication-notes)
 
-![Model sequence](docs/assets/readme-scene-model.png)
+## Overview
 
-## Tech stack
+| Module | Status | Description |
+| --- | :---: | --- |
+| Hero WebGL | `READY` | GLSL hero shader with a shared hero video clock |
+| Scroll Road | `READY` | One logical timeline across desktop and mobile |
+| Mask Calibration | `READY` | Double-click to open; tune position, zoom, and sensitivity |
+| Fly / Transition | `READY` | Frame warm-up and last-available-frame fallback |
+| Footer Shader | `READY` | Displays only after its textures are ready |
+| Application | `READY` | Form scene, hover depth, and application modal |
 
-- React 19
-- Vite 6
-- Custom GLSL shaders
-- HTML Canvas 2D
-- SVG overlays
-- Static media in `public/`
+## Tech Stack
 
-## Project structure
+| Layer | Technologies |
+| --- | --- |
+| Application | React 19 · Vite 6 · pnpm |
+| Graphics | WebGL · GLSL · HTML Canvas 2D |
+| Motion | Scroll timeline · requestAnimationFrame · CSS motion |
+| Visual system | SVG overlays · Chroma-key masking · Responsive layout |
 
-- `src/App.jsx` — app composition, scroll handling, calibration state, and section orchestration
-- `src/timeline.js` — logical road length and scroll-progress remapping
-- `src/components/` — UI, canvas, modal, and narrative sections
-- `src/glsl/` — WebGL shader sources used by the hero and footer transition canvases
-- `public/films/` — video loops and posters for the main scenes
-- `docs/` — reference notes, including replication lessons and prompt examples
+```text
+Browser
+  ├─ React App
+  │   ├─ Scroll Road / Navigation / Narrative
+  │   ├─ HeroCanvas ─────── GLSL + shared hero video
+  │   ├─ SequenceCanvas ─── 2D frames + mask compositing
+  │   ├─ ApplicationScene ─ form scene + orbit geometry
+  │   └─ FooterTransition ─ WebGL texture transition
+  └─ public/films ───────── local video, poster, and frame assets
+```
 
-## Getting started
+## Getting Started
 
 This repository uses **pnpm**.
 
@@ -51,37 +72,98 @@ pnpm dev
 
 The development server runs on:
 
-- `http://localhost:3000/`
+`http://localhost:3000/`
 
-## Available scripts
+Production build and preview:
 
 ```bash
-pnpm dev      # start the Vite dev server
-pnpm build    # build a production bundle
-pnpm preview  # preview the production build locally
+pnpm build
+pnpm preview
 ```
 
-## Useful runtime notes
+## Interaction and Loading
 
-- You can force the initial hero film with the query parameter `?hero=signal`, `?hero=colossus`, or `?hero=reveal`.
-- The mask calibration panel is hidden by default. Double-click anywhere on the page to open or close it.
-- The panel exposes `Zoom / Overscan`, `Object Position X`, `Sky Sensitivity`, a mask debug toggle, reset/preset controls, and a scroll-road locator.
-- Scroll timing is remapped on mobile so the same logical sequence stays aligned across breakpoints.
-- Loading is state-driven: the poster or hero video releases the initial loading state, so a fixed delay cannot expose a blank canvas.
-- If both opening assets fail for 10 seconds, the loading state reports the failure and exposes a `Retry` action.
-- Fly sequence, transition frames, and footer shader media load non-blockingly. During a fast jump, the site keeps the last available frame visible and reports the active phase (`FLY SEQUENCE`, `TRANSITION`, or `FOOTER TRANSITION`) while assets finish loading.
+### Initial Loading
 
-![Terms sequence](docs/assets/readme-scene-terms.png)
+The initial loading state is driven by actual media readiness. Once the poster or hero video can be drawn, the loading state releases; a fixed delay cannot expose a blank canvas.
 
-## Design and replication notes
+If both opening assets fail for 10 seconds, the page reports the failure and exposes a `Retry` action.
 
-This repo includes two companion documents that explain the work in more detail:
+Fly, transition, and footer stages load non-blockingly. During a fast jump, the site keeps the last available frame visible and reports the active phase while assets finish loading, preventing a black screen.
 
-- `handoff.md` — session progress and implementation notes
-- `REPLICATION_LESSONS.md` — technical lessons learned while recreating the experience
+### Mask Calibration Panel
 
-For the Chinese version, see [README.zh-CN.md](README.zh-CN.md). The replication notes are available in both language contexts through this shared [REPLICATION_LESSONS.md](REPLICATION_LESSONS.md) document.
+The calibration panel is hidden by default. Double-click an empty area of the page to open or close it.
 
-## License
+The panel provides:
 
-No explicit license file is included. Treat the code according to your project and usage requirements.
+- `Zoom / Overscan`
+- `Object Position X`
+- `Sky Sensitivity`
+- Mask debug toggle
+- Reset and preset controls
+- Road position readout and draggable locator
+
+Calibration values are stored in the browser's `localStorage`.
+
+### Application Scene
+
+The Application section contains three dashed ellipses, glowing particles, form fields, and a submit button. The ellipses preserve the source site's static orientation instead of introducing an unexpected fast rotation.
+
+![Model sequence](docs/assets/readme-scene-model.png)
+
+## System Architecture
+
+```mermaid
+flowchart LR
+  A[Scroll Position] --> B[Road Timeline]
+  B --> C[React Scene State]
+  C --> D[Hero WebGL]
+  C --> E[Canvas Sequences]
+  C --> F[Application Scene]
+  C --> G[Footer Transition]
+  H[Media Readiness] --> I[Loading State]
+  I --> D
+  I --> E
+  I --> G
+```
+
+## Screenshot Gallery
+
+| Hero | Model | Terms |
+| --- | --- | --- |
+| ![Hero scene](docs/assets/readme-scene-blue.png) | ![Model scene](docs/assets/readme-scene-model.png) | ![Terms scene](docs/assets/readme-scene-terms.png) |
+
+## Project Structure
+
+- `src/App.jsx` — app composition, scroll state, calibration state, and orchestration
+- `src/timeline.js` — logical road length and scroll-progress remapping
+- `src/components/` — UI, canvas, modal, loading, and narrative sections
+- `src/glsl/` — hero and footer transition shader sources
+- `public/films/` — local videos, posters, and frame sequences
+- `docs/assets/` — README preview images
+
+## Common Commands
+
+| Command | Purpose |
+| --- | --- |
+| `pnpm dev` | Start the development server |
+| `pnpm build` | Create a production build |
+| `pnpm preview` | Preview the production build |
+| Double-click the page | Open / close the mask calibration panel |
+
+## Replication Notes
+
+This project is intended for local research and technical learning. Visual assets, branding, and source-site content remain the property of their respective owners; do not use them for commercial publication without permission.
+
+The technical analysis, animation breakdowns, resource-loading investigations, and implementation lessons are documented in [REPLICATION_LESSONS.md](REPLICATION_LESSONS.md).
+
+For the Chinese version, see [README.zh-CN.md](README.zh-CN.md).
+
+## Credits
+
+Recreated by Artgineer
+
+- [GitHub](https://github.com/amasun?tab=repositories)
+- [Xiaohongshu](https://www.xiaohongshu.com/user/profile/5c094b50f7e8b948da476607)
+
