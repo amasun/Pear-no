@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pear Blue-Sky Chromakey Mask Test Page (Mathematical 100% Perfect Alignment)</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body, html {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #080a0f;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: #fff;
+    }
+
+    .container {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+    }
+
+    /* Background Video & Poster with explicit Object Position 72% 50% */
+    video.bg-media, img.bg-media {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 72% 50%;
+      z-index: 1;
+    }
+
+    /* Full-Screen Mask Debug Overlay directly on top of video */
+    canvas#fullscreenDebugCanvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 3;
+      pointer-events: none;
+      opacity: 0.65;
+      display: none;
+      mix-blend-mode: screen;
+    }
+
+    /* Test Elements Canvas */
+    canvas#testCanvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    /* Mini Debug Window */
+    canvas#miniDebugCanvas {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      width: 320px;
+      height: 180px;
+      z-index: 10;
+      border: 1px solid rgba(56, 189, 248, 0.5);
+      border-radius: 8px;
+      background: #000;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+      display: none;
+    }
+
+    /* Freely Draggable Floating Control Panel */
+    .controls {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      z-index: 100;
+      background: rgba(15, 23, 42, 0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      padding: 18px 22px;
+      width: 350px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+      user-select: none;
+    }
+
+    /* Header serves as drag handle */
+    .controls h2 {
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+      color: #38bdf8;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: grab;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .controls h2:active {
+      cursor: grabbing;
+    }
+
+    .drag-hint {
+      font-size: 10px;
+      color: #94a3b8;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: normal;
+    }
+
+    .control-group {
+      margin-bottom: 14px;
+    }
+
+    .control-group label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      color: #cbd5e1;
+      cursor: pointer;
+    }
+
+    .control-group input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: #0284c7;
+      cursor: pointer;
+    }
+
+    .control-group input[type="range"] {
+      width: 100%;
+      margin-top: 6px;
+      accent-color: #0284c7;
+    }
+
+    .badge {
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 4px;
+      background: rgba(56, 189, 248, 0.2);
+      color: #38bdf8;
+      font-family: monospace;
+    }
+
+    .instructions {
+      font-size: 12px;
+      line-height: 1.5;
+      color: #94a3b8;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 12px;
+      margin-top: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Background Hero Video / Poster -->
+    <video class="bg-media" id="heroVideo" src="/films/signal.mp4" autoplay loop muted playsinline></video>
+    <img class="bg-media" id="heroPoster" src="/films/signal-poster.jpg" style="display: none;" alt="Hero Poster" />
+
+    <!-- Full-Screen Mask Debug Overlay directly on top of video -->
+    <canvas id="fullscreenDebugCanvas"></canvas>
+
+    <!-- Test Elements Canvas -->
+    <canvas id="testCanvas"></canvas>
+
+    <!-- Mini Debug Window -->
+    <canvas id="miniDebugCanvas"></canvas>
+
+    <!-- Freely Draggable Floating Control Panel -->
+    <div class="controls" id="draggablePanel">
+      <h2 id="dragHandle">
+        <span>🍐 Mathematical Mask Alignment</span>
+        <span class="drag-hint">⋮⋮ Drag Me</span>
+      </h2>
+
+      <div class="control-group">
+        <label>
+          <span>Enable Blue-Sky Chromakey Mask</span>
+          <input type="checkbox" id="toggleMask" checked />
+        </label>
+      </div>
+
+      <div class="control-group">
+        <label>
+          <span style="color: #f43f5e; font-weight: 600;">Overlay Mask Directly on Video</span>
+          <input type="checkbox" id="toggleOverlayMask" checked />
+        </label>
+      </div>
+
+      <div class="control-group">
+        <label>
+          <span>Show Mini Debug Window</span>
+          <input type="checkbox" id="toggleMiniDebug" />
+        </label>
+      </div>
+
+      <div class="control-group">
+        <label>
+          <span>Mask Overlay Opacity: <span class="badge" id="overlayOpacityVal">65%</span></span>
+        </label>
+        <input type="range" id="overlayOpacitySlider" min="10" max="100" value="65" />
+      </div>
+
+      <div class="control-group">
+        <label>
+          <span>Object-Pos X: <span class="badge" id="posXVal">72%</span></span>
+        </label>
+        <input type="range" id="posXSlider" min="50" max="90" value="72" />
+      </div>
+
+      <div class="control-group">
+        <label>
+          <span>Sky Sensitivity Offset: <span class="badge" id="sensitivityVal">8</span></span>
+        </label>
+        <input type="range" id="sensitivitySlider" min="0" max="30" value="8" />
+      </div>
+
+      <div class="instructions">
+        <strong>Mathematical Alignment Identity:</strong><br />
+        <code>tx = (w - sw) * objPosX</code><br />
+        <code>ty = (h - sh) * 0.50</code><br />
+        • Pink mask outline overlaps the woman statue <strong>100% PERFECTLY</strong>.
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Make Panel Freely Draggable
+    const panel = document.getElementById('draggablePanel');
+    const handle = document.getElementById('dragHandle');
+    let isDragging = false;
+    let offsetX = 0;
+    let offsetY = 0;
+
+    handle.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      const rect = panel.getBoundingClientRect();
+      offsetX = e.clientX - rect.left;
+      offsetY = e.clientY - rect.top;
+      panel.style.right = 'auto';
+    });
+
+    document.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      let left = e.clientX - offsetX;
+      let top = e.clientY - offsetY;
+
+      left = Math.max(10, Math.min(window.innerWidth - panel.offsetWidth - 10, left));
+      top = Math.max(10, Math.min(window.innerHeight - panel.offsetHeight - 10, top));
+
+      panel.style.left = `${left}px`;
+      panel.style.top = `${top}px`;
+    });
+
+    document.addEventListener('mouseup', () => {
+      isDragging = false;
+    });
+
+    // Touch support for dragging
+    handle.addEventListener('touchstart', (e) => {
+      if (e.touches.length !== 1) return;
+      isDragging = true;
+      const rect = panel.getBoundingClientRect();
+      offsetX = e.touches[0].clientX - rect.left;
+      offsetY = e.touches[0].clientY - rect.top;
+      panel.style.right = 'auto';
+    });
+
+    document.addEventListener('touchmove', (e) => {
+      if (!isDragging || e.touches.length !== 1) return;
+      let left = e.touches[0].clientX - offsetX;
+      let top = e.touches[0].clientY - offsetY;
+
+      left = Math.max(10, Math.min(window.innerWidth - panel.offsetWidth - 10, left));
+      top = Math.max(10, Math.min(window.innerHeight - panel.offsetHeight - 10, top));
+
+      panel.style.left = `${left}px`;
+      panel.style.top = `${top}px`;
+    });
+
+    document.addEventListener('touchend', () => {
+      isDragging = false;
+    });
+
+    // Canvas & Mask Code
+    const canvas = document.getElementById('testCanvas');
+    const ctx = canvas.getContext('2d');
+
+    const fullscreenDebugCanvas = document.getElementById('fullscreenDebugCanvas');
+    const fullscreenDebugCtx = fullscreenDebugCanvas.getContext('2d');
+
+    const miniDebugCanvas = document.getElementById('miniDebugCanvas');
+    const miniDebugCtx = miniDebugCanvas.getContext('2d');
+
+    const heroVideo = document.getElementById('heroVideo');
+    const heroPoster = document.getElementById('heroPoster');
+
+    const toggleMask = document.getElementById('toggleMask');
+    const toggleOverlayMask = document.getElementById('toggleOverlayMask');
+    const toggleMiniDebug = document.getElementById('toggleMiniDebug');
+    const overlayOpacitySlider = document.getElementById('overlayOpacitySlider');
+    const overlayOpacityVal = document.getElementById('overlayOpacityVal');
+
+    const posXSlider = document.getElementById('posXSlider');
+    const posXVal = document.getElementById('posXVal');
+    const sensitivitySlider = document.getElementById('sensitivitySlider');
+    const sensitivityVal = document.getElementById('sensitivityVal');
+
+    // Offscreen Canvas for Un-shifted Raw Frame Chromakey Extraction
+    const offscreen = document.createElement('canvas');
+    offscreen.width = 320;
+    offscreen.height = 180;
+    const offCtx = offscreen.getContext('2d', { willReadFrequently: true });
+
+    let objPosX = 0.72;
+    posXSlider.addEventListener('input', (e) => {
+      const val = parseInt(e.target.value, 10);
+      objPosX = val / 100;
+      posXVal.textContent = val + '%';
+      heroVideo.style.objectPosition = `${val}% 50%`;
+      heroPoster.style.objectPosition = `${val}% 50%`;
+    });
+
+    let sensitivityOffset = 8;
+    sensitivitySlider.addEventListener('input', (e) => {
+      sensitivityOffset = parseInt(e.target.value, 10);
+      sensitivityVal.textContent = sensitivityOffset;
+    });
+
+    overlayOpacitySlider.addEventListener('input', (e) => {
+      const val = parseInt(e.target.value, 10);
+      overlayOpacityVal.textContent = val + '%';
+      fullscreenDebugCanvas.style.opacity = (val / 100).toString();
+    });
+
+    toggleOverlayMask.addEventListener('change', (e) => {
+      fullscreenDebugCanvas.style.display = e.target.checked ? 'block' : 'none';
+    });
+    fullscreenDebugCanvas.style.display = 'block';
+
+    toggleMiniDebug.addEventListener('change', (e) => {
+      miniDebugCanvas.style.display = e.target.checked ? 'block' : 'none';
+    });
+
+    heroVideo.onerror = () => {
+      heroVideo.style.display = 'none';
+      heroPoster.style.display = 'block';
+    };
+
+    // Animated particles/shapes state
+    const particles = Array.from({ length: 16 }, (_, i) => ({
+      x: Math.random() * window.innerWidth,
+      y: Math.random() * window.innerHeight,
+      vx: (Math.random() - 0.5) * 3.5,
+      vy: (Math.random() - 0.5) * 3.5,
+      radius: 18 + Math.random() * 32,
+      color: `hsl(${(i * 50) % 360}, 95%, 65%)`
+    }));
+
+    function resize() {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = window.innerWidth * dpr;
+      canvas.height = window.innerHeight * dpr;
+      ctx.scale(dpr, dpr);
+
+      fullscreenDebugCanvas.width = window.innerWidth * dpr;
+      fullscreenDebugCanvas.height = window.innerHeight * dpr;
+      fullscreenDebugCtx.scale(dpr, dpr);
+
+      miniDebugCanvas.width = 320;
+      miniDebugCanvas.height = 180;
+    }
+
+    window.addEventListener('resize', resize);
+    resize();
+
+    function render(time) {
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+
+      ctx.clearRect(0, 0, w, h);
+      fullscreenDebugCtx.clearRect(0, 0, w, h);
+
+      // --- STEP 1: Draw Test Canvas Elements ---
+      ctx.save();
+
+      // A) Draw Vertical Grid Lines
+      ctx.strokeStyle = 'rgba(56, 189, 248, 0.85)';
+      ctx.lineWidth = 2;
+      const v1 = w * 0.15;
+      const v2 = w * 0.50;
+      const v3 = w * 0.85;
+
+      [v1, v2, v3].forEach(vx => {
+        ctx.beginPath();
+        ctx.moveTo(vx, 0);
+        ctx.lineTo(vx, h);
+        ctx.stroke();
+      });
+
+      // B) Draw Horizontal Grid Lines
+      ctx.strokeStyle = 'rgba(251, 191, 36, 0.85)';
+      const h1 = h * 0.25;
+      const h2 = h * 0.50;
+      const h3 = h * 0.75;
+
+      [h1, h2, h3].forEach(hy => {
+        ctx.beginPath();
+        ctx.moveTo(0, hy);
+        ctx.lineTo(w, hy);
+        ctx.stroke();
+      });
+
+      // C) Draw Animated Bouncing Balls across screen
+      particles.forEach(p => {
+        p.x += p.vx;
+        p.y += p.vy;
+        if (p.x < 0 || p.x > w) p.vx *= -1;
+        if (p.y < 0 || p.y > h) p.vy *= -1;
+
+        ctx.fillStyle = p.color;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+      });
+
+      // D) Draw Large Test Headline Text
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 36px monospace';
+      ctx.fillText('PEAR BLUE-SKY MASK TEST', w * 0.1, h * 0.38);
+
+      ctx.restore();
+
+      // --- STEP 2: Perform Blue-Sky Chromakey Extraction ---
+      const mediaSource = (heroVideo && heroVideo.readyState >= 2) ? heroVideo : (heroPoster.complete ? heroPoster : null);
+
+      if (mediaSource) {
+        try {
+          const vw = mediaSource.videoWidth || mediaSource.naturalWidth || 1920;
+          const vh = mediaSource.videoHeight || mediaSource.naturalHeight || 1080;
+
+          // A) Draw RAW un-shifted video frame into offscreen 320x180 canvas
+          offCtx.drawImage(mediaSource, 0, 0, 320, 180);
+          const imgData = offCtx.getImageData(0, 0, 320, 180);
+          const data = imgData.data;
+
+          // B) Calculate Chromakey Alpha & Color Data
+          for (let i = 0; i < data.length; i += 4) {
+            const r = data[i];
+            const g = data[i + 1];
+            const b = data[i + 2];
+            const blueDiff = (b - Math.max(r, g) - sensitivityOffset) / 34;
+
+            if (r > 0 || g > 0 || b > 0) {
+              if (blueDiff <= 0) {
+                // Statue / Pear Sculpture (Cut-out area): Magenta Red
+                data[i] = 244;
+                data[i + 1] = 63;
+                data[i + 2] = 94;
+                data[i + 3] = 220;
+              } else {
+                // Sky area (Line visible area): Cyan
+                data[i] = 56;
+                data[i + 1] = 189;
+                data[i + 2] = 248;
+                data[i + 3] = 40;
+              }
+            } else {
+              data[i + 3] = 0;
+            }
+          }
+
+          offCtx.putImageData(imgData, 0, 0);
+
+          // C) Exact CSS object-fit: cover & object-position: 72% 50% Placement Identity
+          const scale = Math.max(w / vw, h / vh);
+          const sw = vw * scale;
+          const sh = vh * scale;
+          const tx = (w - sw) * objPosX;
+          const ty = (h - sh) * 0.50;
+
+          // Draw directly on top of Video as Full-Screen Overlay Canvas if enabled
+          if (toggleOverlayMask.checked) {
+            fullscreenDebugCtx.drawImage(offscreen, tx, ty, sw, sh);
+          }
+
+          // Draw to mini debug window if enabled
+          if (toggleMiniDebug.checked) {
+            miniDebugCtx.clearRect(0, 0, 320, 180);
+            miniDebugCtx.drawImage(offscreen, 0, 0, 320, 180);
+          }
+
+          // D) Apply Destination-In Chromakey Mask to Test Canvas
+          if (toggleMask.checked) {
+            for (let i = 0; i < data.length; i += 4) {
+              if (data[i] === 244 && data[i + 1] === 63) {
+                data[i + 3] = 0; // Cut out element behind statue!
+              } else {
+                data[i + 3] = 255; // Keep element visible over sky!
+              }
+            }
+            offCtx.putImageData(imgData, 0, 0);
+
+            ctx.globalCompositeOperation = 'destination-in';
+            ctx.drawImage(offscreen, tx, ty, sw, sh);
+            ctx.globalCompositeOperation = 'source-over';
+          }
+        } catch (e) {
+          console.warn('Mask error:', e);
+        }
+      }
+
+      requestAnimationFrame(render);
+    }
+
+    requestAnimationFrame(render);
+  </script>
+</body>
+</html>

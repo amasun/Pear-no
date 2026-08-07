@@ -1,0 +1,12 @@
+# Skill Orchestrator Project Scoped Skills
+.agents/skills/*
+!.agents/skills/.gitkeep
+
+# Local dependencies and build output
+node_modules/
+dist/
+
+# Local captures, extracted debug data, and Codex preview logs
+.capture/
+extracted_data/
+.codex-*.log

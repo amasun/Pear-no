@@ -1,0 +1,43 @@
+.credit-note {
+  position: fixed;
+  right: clamp(20px, 3vw, 44px);
+  bottom: 18px;
+  z-index: 9997;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.35em 0.7em;
+  max-width: min(42vw, 360px);
+  color: rgba(255, 255, 255, .58);
+  font-family: var(--code, monospace);
+  font-size: 9px;
+  letter-spacing: .12em;
+  line-height: 1.4;
+  text-align: right;
+  text-transform: uppercase;
+  pointer-events: auto;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, .35);
+}
+
+.credit-note__links { display: inline-flex; gap: .7em; }
+.credit-note a { transition: color .2s linear; }
+.credit-note a:hover, .credit-note a:focus-visible { color: #fff; }
+.credit-note i { color: rgba(255, 255, 255, .3); font-style: normal; }
+
+@media (max-width: 720px) {
+  .credit-note {
+    right: 18px;
+    bottom: 16px;
+    max-width: calc(100vw - 36px);
+    font-size: 8px;
+  }
+}
+
+/* The locator is only mounted while the calibration panel is open. */
+body:has(.scroll-locator) .credit-note {
+  bottom: 120px;
+}
+
+@media (max-width: 720px) {
+  body:has(.scroll-locator) .credit-note { bottom: 120px; }
+}

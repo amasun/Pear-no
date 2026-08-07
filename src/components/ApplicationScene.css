@@ -1,0 +1,18 @@
+.cf .cf-f {
+  will-change: transform, filter, opacity;
+  transform-origin: center;
+  backface-visibility: hidden;
+  transition:
+    opacity .24s linear,
+    transform .42s cubic-bezier(.22, 1, .36, 1),
+    filter .42s cubic-bezier(.22, 1, .36, 1);
+}
+
+.cf-orb ellipse {
+  transform-box: view-box;
+  transform: rotate(var(--base-rot, 0deg));
+}
+
+@media (width <= 720px) {
+  .cf-orb ellipse { animation: none; }
+}

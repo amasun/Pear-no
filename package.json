@@ -1,0 +1,35 @@
+{
+  "name": "pear-no-clone",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "vite": "^6.0.0"
+  },
+  "skill-orchestrator": {
+    "skills": [
+      "web-shader-extractor",
+      "3d-web-experience",
+      "animation-vocabulary",
+      "anthropic-art",
+      "apple-design",
+      "bigquery-ai-ml",
+      "cinematic-gsap-lenis-motion-system",
+      "computer-use-guidance-windows",
+      "davila7-claude-code-templates-3d-web-experience",
+      "digital-avatar-creator"
+    ]
+  }
+}
