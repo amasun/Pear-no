@@ -1,7 +1,11 @@
 .ov .menu {
-  min-width: 44px;
-  min-height: 44px;
+  width: 44px;
+  height: 44px;
   place-items: center;
+  align-content: center;
+  justify-content: center;
+  grid-template-columns: repeat(2, max-content);
+  grid-auto-rows: max-content;
   padding: 0;
 }
 
