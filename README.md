@@ -20,8 +20,6 @@
 
 原始站点：[https://pear.no/](https://pear.no/)
 
-![Blue hero scene](docs/assets/readme-scene-blue.png)
-
 ## 项目预览
 
 <video src="https://github.com/user-attachments/assets/21d93997-d0d2-472b-a3f0-2891058f6577" controls muted loop playsinline width="100%"></video>
