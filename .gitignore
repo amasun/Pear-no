@@ -10,3 +10,6 @@ dist/
 .capture/
 extracted_data/
 .codex-*.log
+
+# Local Xiaohongshu copy and pitch drafts
+xiaohongshu-content/
