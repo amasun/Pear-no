@@ -4,12 +4,16 @@
   place-items: center;
   align-content: center;
   justify-content: center;
-  grid-template-columns: repeat(2, max-content);
-  grid-auto-rows: max-content;
+  grid-template-columns: repeat(2, 4px) !important;
+  grid-template-rows: repeat(2, 4px) !important;
+  gap: 3px !important;
   padding: 0;
 }
 
 .ov .menu span {
+  width: 4px !important;
+  height: 4px !important;
+  aspect-ratio: auto;
   pointer-events: none;
 }
 
