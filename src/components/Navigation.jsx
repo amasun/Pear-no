@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
+import './NavigationControls.css';
 
 const clamp01 = (value) => Math.min(1, Math.max(0, value));
 const smoothstep = (value) => {
@@ -247,9 +248,10 @@ function WorkStory({ progress }) {
 export default function Navigation({
   activeChapter = 0,
   scrollProgress = 0,
-  onOpenApply
+  onOpenApply,
+  calibratorOpen = false,
+  onToggleCalibrator
 }) {
-  const [menuOpen, setMenuOpen] = useState(false);
   const inWorkStory = scrollProgress >= WORK_STORY_START && scrollProgress <= WORK_STORY_END;
   const modelProgress = clamp01(scrollProgress / MODEL_END);
   const road = scrollProgress * 5350;
@@ -304,11 +306,12 @@ export default function Navigation({
 
       {/* Menu Button with 4 dots */}
       <button
-        className={`menu ${menuOpen ? 'on' : ''}`}
+        className={`menu ${calibratorOpen ? 'on' : ''}`}
         type="button"
-        aria-label="Menu"
-        aria-expanded={menuOpen}
-        onClick={() => setMenuOpen(!menuOpen)}
+        aria-label={calibratorOpen ? 'Close mask calibration panel' : 'Open mask calibration panel'}
+        title={calibratorOpen ? 'Close mask calibration panel' : 'Open mask calibration panel'}
+        aria-expanded={calibratorOpen}
+        onClick={onToggleCalibrator}
         style={{ opacity: 1, pointerEvents: 'auto' }}
       >
         <span />
@@ -316,6 +319,9 @@ export default function Navigation({
         <span />
         <span />
       </button>
+      <output className="scroll-percent" aria-label="Page scroll progress">
+        {(Math.min(1, Math.max(0, scrollProgress)) * 100).toFixed(0)}%
+      </output>
 
       {/* Header Apply Trigger */}
       <nav className="hdr label" style={{ opacity: 1, pointerEvents: 'auto' }}>

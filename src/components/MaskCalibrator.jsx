@@ -76,9 +76,18 @@ export default function MaskCalibrator({
   showDebug = false,
   setShowDebug,
   scrollProgress = 0,
-  scrollY = 0
+  scrollY = 0,
+  isVisible: controlledIsVisible,
+  onVisibilityChange
 }) {
-  const [isVisible, setIsVisible] = useState(false);
+  const [uncontrolledIsVisible, setUncontrolledIsVisible] = useState(false);
+  const isControlled = typeof controlledIsVisible === 'boolean';
+  const isVisible = isControlled ? controlledIsVisible : uncontrolledIsVisible;
+  const updateVisibility = (nextValue) => {
+    const next = typeof nextValue === 'function' ? nextValue(isVisible) : nextValue;
+    if (!isControlled) setUncontrolledIsVisible(next);
+    onVisibilityChange?.(next);
+  };
   const [position, setPosition] = useState({ top: 20, right: 20 });
   const [isDragging, setIsDragging] = useState(false);
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
@@ -88,11 +97,11 @@ export default function MaskCalibrator({
   useEffect(() => {
     const handleDblClick = (event) => {
       if (['INPUT', 'BUTTON', 'A'].includes(event.target.tagName)) return;
-      setIsVisible((visible) => !visible);
+      updateVisibility((visible) => !visible);
     };
     window.addEventListener('dblclick', handleDblClick);
     return () => window.removeEventListener('dblclick', handleDblClick);
-  }, []);
+  }, [isVisible]);
 
   const handleMouseDown = (event) => {
     setIsDragging(true);
@@ -211,7 +220,7 @@ export default function MaskCalibrator({
           <Grip />
           <button
             type="button"
-            onClick={() => setIsVisible(false)}
+            onClick={() => updateVisibility(false)}
             title="Close calibration panel"
             aria-label="Close calibration panel"
             style={{ display: 'grid', placeItems: 'center', width: '28px', height: '28px', marginLeft: '4px', color: muted, background: 'transparent', border: 0, cursor: 'pointer', fontSize: '18px', lineHeight: 1 }}

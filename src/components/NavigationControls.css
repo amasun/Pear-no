@@ -1,0 +1,46 @@
+.ov .menu {
+  min-width: 44px;
+  min-height: 44px;
+  place-items: center;
+  padding: 0;
+}
+
+.ov .menu span {
+  pointer-events: none;
+}
+
+.ov .menu.on {
+  color: var(--mark);
+}
+
+.ov .scroll-percent {
+  position: absolute;
+  left: 2.65%;
+  top: calc(var(--h1) * 1.5 + 25px);
+  min-width: 44px;
+  color: currentColor;
+  font-family: var(--code);
+  font-size: 9px;
+  letter-spacing: .08em;
+  line-height: 1;
+  text-align: center;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+@media (width <= 820px) {
+  .ov .scroll-percent {
+    left: 24px;
+  }
+}
+
+@media (width <= 720px) {
+  .ov .scroll-percent {
+    left: auto;
+    right: calc(100% - var(--v2) + 12px);
+    top: calc(var(--h1) / 2 + 34px);
+    min-width: 44px;
+    font-size: 8px;
+    transform: translateX(-50%);
+  }
+}

@@ -56,6 +56,7 @@ export default function App() {
   });
 
   const [showDebug, setShowDebug] = useState(false);
+  const [calibratorOpen, setCalibratorOpen] = useState(false);
 
   useEffect(() => {
     localStorage.setItem('pear_mask_pos_x', maskPosX.toString());
@@ -146,6 +147,8 @@ export default function App() {
         setShowDebug={setShowDebug}
         scrollProgress={scrollProgress}
         scrollY={scrollY}
+        isVisible={calibratorOpen}
+        onVisibilityChange={setCalibratorOpen}
       />
 
       <div className="stage">
@@ -221,6 +224,8 @@ export default function App() {
             activeChapter={activeChapter}
             scrollProgress={scrollProgress}
             onOpenApply={scrollToApplication}
+            calibratorOpen={calibratorOpen}
+            onToggleCalibrator={() => setCalibratorOpen((open) => !open)}
           />
 
           {/* 3D FAQ Cylindrical Carousel */}
