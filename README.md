@@ -1,5 +1,7 @@
 # Pear No Clone
 
+[中文文档](README.zh-CN.md) · English
+
 ![Pear No Clone banner](docs/assets/readme-banner.png)
 
 A React + Vite recreation of the [pear.no](https://pear.no/) experience.
@@ -77,6 +79,8 @@ This repo includes two companion documents that explain the work in more detail:
 
 - `handoff.md` — session progress and implementation notes
 - `REPLICATION_LESSONS.md` — technical lessons learned while recreating the experience
+
+For the Chinese version, see [README.zh-CN.md](README.zh-CN.md). The replication notes are available in both language contexts through this shared [REPLICATION_LESSONS.md](REPLICATION_LESSONS.md) document.
 
 ## License
 

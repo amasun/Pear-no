@@ -1,5 +1,7 @@
 # Pear No Clone
 
+[中文文档](README.zh-CN.md) · [English](README.md)
+
 <p align="center">
   <img src="https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react&logoColor=white" alt="React 19" />
   <img src="https://img.shields.io/badge/Vite-6-646CFF?style=flat-square&logo=vite&logoColor=white" alt="Vite 6" />
