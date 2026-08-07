@@ -36,21 +36,7 @@
 以下为作者展示的“一条 prompt，一个画面”示例原文：
 
 ```text
-"A wide cinematic scene painted as a single NEOCLASSICAL OIL
-PAINTING: smooth painterly rendering like Ingres and Jacques-
-Louis David, elegant idealized forms, NOT pixel art, NOT
-cross-stitch. A flat saturated cerulean-blue sky fills the
-entire canvas edge to edge, no gradient, no vignette. At the
-right, a tall white marble column; standing on its capital a
-young woman in white drapery with a red sash holds a single
-golden pear high above her head. From the pear, wide
-concentric rings rendered as coarse black-and-white halftone
-dither dots ripple outward across the sky like a broadcast
-signal, the rings thinning and spreading left. At the base of
-the column, a small crowd of robed figures looks up toward the
-pear. A single small rainbow glitch smear inside one ring
-segment only. Generous empty flat cerulean sky across the
-upper left for text. No text anywhere."
+"A wide cinematic scene painted as a single NEOCLASSICAL OIL PAINTING: smooth painterly rendering like Ingres and Jacques-Louis David, elegant idealized forms, NOT pixel art, NOT cross-stitch. A flat saturated cerulean-blue sky fills the entire canvas edge to edge, no gradient, no vignette. At the right, a tall white marble column; standing on its capital a young woman in white drapery with a red sash holds a single golden pear high above her head. From the pear, wide concentric rings rendered as coarse black-and-white halftone dither dots ripple outward across the sky like a broadcast signal, the rings thinning and spreading left. At the base of the column, a small crowd of robed figures looks up toward the pear. A single small rainbow glitch smear inside one ring segment only. Generous empty flat cerulean sky across the upper left for text. No text anywhere."
 ```
 
 ![作者展示的 prompt skeleton 与对应画面](docs/assets/prompt-skeleton-example.png)
