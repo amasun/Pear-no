@@ -1,8 +1,10 @@
+import { withBase } from './utils/assetPath';
+
 export const FILMS = [
   {
     id: 'signal',
-    src: '/films/signal.mp4',
-    poster: '/films/signal-poster.jpg',
+    src: withBase('/films/signal.mp4'),
+    poster: withBase('/films/signal-poster.jpg'),
     origin: [0.707, 0.926],
     pos: [0.72, 0.72, 1],
     bridge: 'v28',
@@ -10,8 +12,8 @@ export const FILMS = [
   },
   {
     id: 'colossus',
-    src: '/films/colossus.mp4',
-    poster: '/films/colossus-poster.jpg',
+    src: withBase('/films/colossus.mp4'),
+    poster: withBase('/films/colossus-poster.jpg'),
     origin: [0.732, 0.54],
     pos: [0.72, 0.6, 1],
     bridge: 'v51',
@@ -19,8 +21,8 @@ export const FILMS = [
   },
   {
     id: 'reveal',
-    src: '/films/reveal.mp4',
-    poster: '/films/reveal-poster.jpg',
+    src: withBase('/films/reveal.mp4'),
+    poster: withBase('/films/reveal-poster.jpg'),
     origin: [0.84, 0.63],
     pos: [0.72, 0.62, 1],
     bridge: 'v61',

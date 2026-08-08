@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { FILMS } from '../films';
+import { withBase } from '../utils/assetPath';
 
 const clamp01 = (value) => Math.min(1, Math.max(0, value));
 const smoothstep = (value) => {
@@ -128,12 +129,12 @@ export default function SequenceCanvas({
       return frameCache.get(src);
     };
 
-    const flyFallback = getFrame(`/films/flysky/${window.innerWidth <= 820 ? '768/' : ''}f_001.webp`);
-    const transFallback = getFrame(`/films/trans/${window.innerWidth <= 820 ? '768/' : ''}f_001.webp`);
+    const flyFallback = getFrame(withBase(`/films/flysky/${window.innerWidth <= 820 ? '768/' : ''}f_001.webp`));
+    const transFallback = getFrame(withBase(`/films/trans/${window.innerWidth <= 820 ? '768/' : ''}f_001.webp`));
     [30, 60, 90, 121].forEach((index) => {
       const frameName = String(index).padStart(3, '0');
-      getFrame(`/films/flysky/${window.innerWidth <= 820 ? '768/' : ''}f_${frameName}.webp`);
-      getFrame(`/films/trans/${window.innerWidth <= 820 ? '768/' : ''}f_${frameName}.webp`);
+      getFrame(withBase(`/films/flysky/${window.innerWidth <= 820 ? '768/' : ''}f_${frameName}.webp`));
+      getFrame(withBase(`/films/trans/${window.innerWidth <= 820 ? '768/' : ''}f_${frameName}.webp`));
     });
 
     const render = () => {
@@ -160,7 +161,7 @@ export default function SequenceCanvas({
         if (road > FLY_START && road < FLY_CROSSFADE_END) {
           const isMobile = w <= 820;
           const flyProgress = clamp01((road - FLY_START) / (FLY_SEQUENCE_END - FLY_START));
-          const pathPrefix = `/films/flysky/${isMobile ? '768/' : ''}`;
+          const pathPrefix = withBase(`/films/flysky/${isMobile ? '768/' : ''}`);
           const frameIndex = Math.min(121, Math.max(1, Math.round(flyProgress * 120) + 1));
           const numStr = String(frameIndex).padStart(3, '0');
           const img = getFrame(`${pathPrefix}f_${numStr}.webp`);
@@ -187,7 +188,7 @@ export default function SequenceCanvas({
         }
         if (road > TRANSITION_START && road < 5350) {
           const isMobile = w <= 820;
-          const pathPrefix = `/films/trans/${isMobile ? '768/' : ''}`;
+          const pathPrefix = withBase(`/films/trans/${isMobile ? '768/' : ''}`);
           const transitionProgress = clamp01((road - TRANSITION_START) / 700);
           const sequenceProgress = clamp01(transitionProgress / 0.62);
           const frameIndex = Math.min(121, Math.max(1, Math.round(sequenceProgress * 120) + 1));

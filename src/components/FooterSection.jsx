@@ -1,4 +1,5 @@
 import React from 'react';
+import { withBase } from '../utils/assetPath';
 
 const clamp = (value) => Math.min(1, Math.max(0, value));
 const smooth = (value) => { const t = clamp(value); return t * t * (3 - 2 * t); };
@@ -22,7 +23,7 @@ export default function FooterSection({ scrollProgress = 0 }) {
     <>
       <video
         className="foot"
-        src="/films/footer-loop.mp4"
+        src={withBase('/films/footer-loop.mp4')}
         loop
         playsInline
         muted

@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import vertexSource from '../glsl/transition_vertex.glsl?raw';
 import fragmentSource from '../glsl/transition_fragment.glsl?raw';
+import { withBase } from '../utils/assetPath';
 
 const clamp = (value) => Math.min(1, Math.max(0, value));
 const gradeTimes = [0, 1, 4, 9, 10];
@@ -67,7 +68,7 @@ export default function FooterTransitionCanvas({ scrollProgress = 0, onPhaseStat
     gl.uniform2f(locations.img, 1920, 1080);
     const isMobile = window.innerWidth <= 820;
     const lastFrame = new Image();
-    lastFrame.src = `/films/trans/${isMobile ? '768/' : ''}f_121.webp`;
+    lastFrame.src = withBase(`/films/trans/${isMobile ? '768/' : ''}f_121.webp`);
     const footer = document.querySelector('.foot');
     if (!footer) return undefined;
     let uploadedA = false;

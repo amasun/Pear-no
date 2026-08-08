@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import vertexSource from '../glsl/hero_vertex.glsl?raw';
 import fragmentSource from '../glsl/hero_main_fragment.glsl?raw';
 import { FILMS } from '../films';
+import { withBase } from '../utils/assetPath';
 
 const BRIDGE_FRAME_COUNT = 121;
 const RENAISSANCE_FRAME_COUNT = 362;
@@ -134,7 +135,7 @@ export default function HeroCanvas({
     }
     video.play().catch(() => {});
     const poster = loadImage(film.poster);
-    const plate = loadImage('/art/scaffold_expand.jpg');
+    const plate = loadImage(withBase('/art/scaffold_expand.jpg'));
     plate.onload = () => upload(2, plate, 'uResC');
 
     const caches = { model: new Map(), coda: new Map(), tree: new Map(), plan: new Map() };
@@ -144,10 +145,10 @@ export default function HeroCanvas({
         const modelFrame = inBridge ? frame : frame - BRIDGE_FRAME_COUNT;
         const number = String(modelFrame + 1).padStart(3, '0');
         const sequence = inBridge ? film.bridge : 'renaissance';
-        return `/films/model/${sequence}/${tier}/f_${number}.webp`;
+        return withBase(`/films/model/${sequence}/${tier}/f_${number}.webp`);
       }
       const number = String(frame + 1).padStart(3, '0');
-      return `/films/${kind}/${isMobile ? '768/' : ''}f_${number}.webp`;
+      return withBase(`/films/${kind}/${isMobile ? '768/' : ''}f_${number}.webp`);
     };
     const frame = (kind, index, count) => {
       const safeIndex = Math.round(clamp(index, 0, count - 1));
