@@ -120,11 +120,15 @@ export default function App() {
   const initialPoster = FILMS[initialFilmIndex].poster;
   const bootLoaded = posterReady || videoReady;
   const initialPosition = FILMS[initialFilmIndex].pos[window.innerWidth < 768 ? 0 : window.innerWidth < 1180 ? 1 : 2];
-  const scrollToApplication = () => {
+  const scrollToProgress = (progress) => {
     const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-    const rawProgress = rawProgressFromMapped(4600 / TOTAL_ROAD, window.innerWidth <= 720);
+    const rawProgress = rawProgressFromMapped(progress, window.innerWidth <= 720);
     setIsApplyOpen(false);
-    window.scrollTo({ top: maxScroll * rawProgress, behavior: 'auto' });
+    window.scrollTo({ top: maxScroll * rawProgress, behavior: 'smooth' });
+  };
+
+  const scrollToApplication = () => {
+    scrollToProgress(4600 / TOTAL_ROAD);
   };
 
   return (
@@ -224,6 +228,7 @@ export default function App() {
             activeChapter={activeChapter}
             scrollProgress={scrollProgress}
             onOpenApply={scrollToApplication}
+            onNavigate={scrollToProgress}
             calibratorOpen={calibratorOpen}
             onToggleCalibrator={() => setCalibratorOpen((open) => !open)}
           />

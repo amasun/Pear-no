@@ -249,6 +249,7 @@ export default function Navigation({
   activeChapter = 0,
   scrollProgress = 0,
   onOpenApply,
+  onNavigate,
   calibratorOpen = false,
   onToggleCalibrator
 }) {
@@ -343,6 +344,10 @@ export default function Navigation({
             href={`#${ch.id}`}
             className={activeChapter === idx ? 'on' : ''}
             data-at={CHAPTER_AT[idx]}
+            onClick={(event) => {
+              event.preventDefault();
+              onNavigate?.(CHAPTER_AT[idx]);
+            }}
           >
             <i />
             <em>{ch.name}</em>
